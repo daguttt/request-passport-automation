@@ -34,7 +34,7 @@ console.log({ monthNumber, DAY });
   // Do first passport payment
   await extractPossibleHtmlForm(pageToRequestPassport);
 
-  // await handOverControlToUser(pageToRequestPassport);
+  await handOverControlToUser(pageToRequestPassport);
 
   // ---------------------
   await context.close();
