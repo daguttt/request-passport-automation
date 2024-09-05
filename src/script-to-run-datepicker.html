@@ -1,0 +1,57 @@
+<script>
+  $(document).ready(function () {
+    // ⬇ this ID is dinamic ⚠
+    $('#66d9cd116c315d').datetimepicker({
+      numberOfMonths: 1,
+      changeMonth: true,
+      changeYear: true,
+      dateFormat: 'dd/mm/yy',
+      showTimepicker: false,
+      dayNames: [
+        'Domingo',
+        'Lunes',
+        'Martes',
+        'Mi&eacute;rcoles',
+        'Jueves',
+        'Viernes',
+        'S&aacute;bado',
+      ],
+      dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
+      dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+      monthNames: [
+        'Enero',
+        'Febrero',
+        'Marzo',
+        'Abril',
+        'Mayo',
+        'Junio',
+        'Julio',
+        'Agosto',
+        'Septiembre',
+        'Octubre',
+        'Noviembre',
+        'Diciembre',
+      ],
+      monthNamesShort: [
+        'Ene',
+        'Feb',
+        'Mar',
+        'Abr',
+        'May',
+        'Jun',
+        'Jul',
+        'Ago',
+        'Sep',
+        'Oct',
+        'Nov',
+        'Dic',
+      ],
+      buttonText: 'Ver Calendario',
+      closeText: 'Listo',
+      currentText: 'Hoy',
+      nextText: 'Siguiente',
+      prevText: 'Anterior',
+      yearRange: 'c-80:c+50',
+    });
+  });
+</script>
