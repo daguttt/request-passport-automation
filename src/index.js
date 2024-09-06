@@ -2,16 +2,32 @@ import { writeFile } from 'node:fs/promises';
 import 'dotenv/config';
 import { chromium } from 'playwright';
 
-import { getMonthNumber } from './getMonthNumber.js';
+const { DNI, NAMES, LASTNAMES, EMAIL, PHONE } = (() => {
+  if (
+    process.env.DNI &&
+    process.env.NAMES &&
+    process.env.LASTNAMES &&
+    process.env.EMAIL &&
+    process.env.PHONE
+  )
+    return {
+      DNI: process.env.DNI,
+      NAMES: process.env.NAMES,
+      LASTNAMES: process.env.LASTNAMES,
+      EMAIL: process.env.EMAIL,
+      PHONE: process.env.PHONE,
+    };
 
-const MONTH = process.env.MONTH || 'Septiembre';
+  throw new Error('Missing environment variables.');
+})();
 
-console.log({ MONTH });
-
-const monthNumber = getMonthNumber(MONTH);
-const DAY = process.env.DAY || '3';
-
-console.log({ monthNumber, DAY });
+console.log({
+  DNI,
+  NAMES,
+  LASTNAMES,
+  EMAIL,
+  PHONE,
+});
 
 // page1: Where the form will be (https://sedeelectronica.antioquia.gov.co/pasaporte/)
 (async () => {
@@ -49,12 +65,43 @@ console.log({ monthNumber, DAY });
  */
 async function fillFirstPaymentForm(page) {
   // -*******************************************************************************-
-  await page.getByLabel('Tipo de solicitud: *').selectOption('1');
-  await page.getByLabel('Número de identificación: *').fill('1000747179');
-  await page
-    .getByLabel('Confirmación Número de identificación: *')
-    .fill('1000747179');
+  console.log("Filling 'Tipo de identificación: *'");
+  await page.getByLabel('Tipo de identificación: *').selectOption('1');
+
+  console.log("Filling 'Número de identificación: *'");
+  await page.getByLabel('Número de identificación: *').fill(DNI);
+
+  console.log("Filling 'Confirmación Número de identificación: *'");
+  await page.getByLabel('Confirmación Número de identificación: *').fill(DNI);
+
+  console.log("Filling 'Nombres: *'");
+  await page.getByLabel('Nombres: *').fill(NAMES);
+
+  console.log("Filling 'Apellido: *'");
+  await page.getByLabel('Apellido: *').fill(LASTNAMES);
+
+  console.log("Filling 'Email: *'");
+  await page.getByLabel('Email: *').fill(EMAIL);
+
+  console.log("Filling 'Confirmación Email: *'");
+  await page.getByLabel('Confirmación Email: *').fill(EMAIL);
+
+  console.log("Filling 'Celular: *'");
+  await page.getByLabel('Celular: *').fill(PHONE);
+
+  console.log("Filling 'Acepto'");
   await page.getByLabel('Acepto').check();
+
+  console.log("Focusing 'Tipo de pasaporte: *'");
+  await page.getByLabel('Tipo de pasaporte: *').focus();
+
+  console.log();
+  console.log('-*********************************************************-');
+  console.log(
+    'NOW, SELECT THE TYPE OF PASSPORT AND CONTINUE WITH THE PAYMENT...'
+  );
+  console.log('-*********************************************************-');
+  console.log();
 
   await handOverControlToUser(pageToRequestPassport);
   // -*******************************************************************************-
