@@ -73,6 +73,7 @@ async function handOverControlToUser(page) {
  * @param {import('playwright').Page} page
  */
 async function extractHtmlPageAndTakeScreenshot(page) {
+  await page.waitForLoadState('domcontentloaded');
   const paymentPageBodyHtml = await page
     .locator('body')
     // .locator('.modContent')
@@ -82,7 +83,6 @@ async function extractHtmlPageAndTakeScreenshot(page) {
 
   await writeFile('./output/payment-page.html', paymentPageBodyHtml);
 
-  await page.waitForLoadState('domcontentloaded');
   await page.screenshot({
     path: './output/full-screenshot.png',
     fullPage: true,
