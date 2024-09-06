@@ -83,7 +83,10 @@ async function extractHtmlPageAndTakeScreenshot(page) {
   await writeFile('./output/payment-page.html', paymentPageBodyHtml);
 
   await page.waitForLoadState('domcontentloaded');
-  await page.screenshot({ path: './output/screenshot.png', fullPage: true });
+  await page.screenshot({
+    path: './output/full-screenshot.png',
+    fullPage: true,
+  });
 }
 
 /**
