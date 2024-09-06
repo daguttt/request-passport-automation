@@ -56,9 +56,9 @@ async function handOverControlToUser(page) {
  *
  * @param {import('playwright').Page} page
  */
-async function extractPossibleHtmlForm(page) {
+async function extractHtmlPageAndTakeScreenshot(page) {
   const possibleFormContainerHtml = await page
-    .locator('.modMenuContainer')
+    .locator('body')
     // .locator('.modContent')
     .innerHTML();
 
