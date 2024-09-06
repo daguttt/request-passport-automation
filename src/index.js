@@ -32,17 +32,33 @@ console.log({ monthNumber, DAY });
   // await requestAppointment(page1);
 
   // Do first passport payment
-  await extractPossibleHtmlForm(pageToRequestPassport);
+  await extractHtmlPageAndTakeScreenshot(pageToRequestPassport);
+  await fillFirstPaymentForm(pageToRequestPassport);
 
-  await handOverControlToUser(pageToRequestPassport);
+  // await handOverControlToUser(pageToRequestPassport);
+  //
 
   // ---------------------
   await context.close();
   await browser.close();
 })();
 
-// User takes control from here
-// await page1.waitForTimeout(1000 * 60 * 60);
+/**
+ *
+ * @param {import('playwright').Page} page
+ */
+async function fillFirstPaymentForm(page) {
+  // -*******************************************************************************-
+  await page.getByLabel('Tipo de solicitud: *').selectOption('1');
+  await page.getByLabel('Número de identificación: *').fill('1000747179');
+  await page
+    .getByLabel('Confirmación Número de identificación: *')
+    .fill('1000747179');
+  await page.getByLabel('Acepto').check();
+
+  await handOverControlToUser(pageToRequestPassport);
+  // -*******************************************************************************-
+}
 
 /**
  *
