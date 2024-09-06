@@ -69,7 +69,7 @@ async function extractPossibleHtmlForm(page) {
   );
 
   await page.waitForLoadState('domcontentloaded');
-  await page.screenshot({ path: './output/screenshot.png' });
+  await page.screenshot({ path: './output/screenshot.png', fullPage: true });
 }
 
 /**
