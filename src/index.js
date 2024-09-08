@@ -42,22 +42,48 @@ console.log({
   await page.getByRole('button', { name: 'Cerrar' }).click();
   const pageToRequestPassportPromise = page.waitForEvent('popup');
   await page.getByRole('link', { name: 'Realice el pago de su' }).click();
-  const pageToRequestPassport = await pageToRequestPassportPromise;
+  const possiblePageToRequestPassport = await pageToRequestPassportPromise;
 
-  // Request appointment
-  // await requestAppointment(page1);
+  // Validate page
+  const validatedPage = await getValidPaymentFormPage(
+    possiblePageToRequestPassport
+  );
 
   // Do first passport payment
-  await extractHtmlPageAndTakeScreenshot(pageToRequestPassport);
-  await fillFirstPaymentForm(pageToRequestPassport);
+  await extractHtmlPageAndTakeScreenshot(validatedPage);
+  await fillFirstPaymentForm(validatedPage);
 
   // await handOverControlToUser(pageToRequestPassport);
   //
+
+  // Request appointment
+  // await requestAppointment(page1);
 
   // ---------------------
   await context.close();
   await browser.close();
 })();
+
+/**
+ *
+ * @param {import('playwright').Page} page
+ * @param {number} retries
+ */
+async function getValidPaymentFormPage(page, retries = 5) {
+  for (let i = 0; i < retries; i++) {
+    const isPageValid =
+      (await page.getByText('Realice el pago de su pasaporte').count()) === 1;
+
+    if (isPageValid) return page;
+
+    console.log();
+    console.log('Could not get into the payment form page, reloading...');
+    console.log();
+    await page.reload();
+  }
+
+  throw new Error('Could not get into the payment form page');
+}
 
 /**
  *
