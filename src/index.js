@@ -35,23 +35,18 @@ console.log({
     headless: false,
   });
   const context = await browser.newContext();
-  const page = await context.newPage();
-  await page.goto(
+  const initialPage = await context.newPage();
+  await initialPage.goto(
     'https://sedeelectronica.antioquia.gov.co/publicaciones/227/pasaportes/'
   );
-  await page.getByRole('button', { name: 'Cerrar' }).click();
-  const pageToRequestPassportPromise = page.waitForEvent('popup');
-  await page.getByRole('link', { name: 'Realice el pago de su' }).click();
-  const possiblePageToRequestPassport = await pageToRequestPassportPromise;
+  await initialPage.getByRole('button', { name: 'Cerrar' }).click();
 
-  // Validate page
-  const validatedPage = await getValidPaymentFormPage(
-    possiblePageToRequestPassport
-  );
+  // Get payment form page
+  const paymentFormPage = await getValidPaymentFormPage(initialPage);
 
   // Do first passport payment
-  await extractHtmlPageAndTakeScreenshot(validatedPage);
-  await fillFirstPaymentForm(validatedPage);
+  await extractHtmlPageAndTakeScreenshot(paymentFormPage);
+  await fillFirstPaymentForm(paymentFormPage);
 
   // await handOverControlToUser(pageToRequestPassport);
   //
@@ -66,20 +61,27 @@ console.log({
 
 /**
  *
- * @param {import('playwright').Page} page
+ * @param {import('playwright').Page} initialPage
  * @param {number} retries
  */
-async function getValidPaymentFormPage(page, retries = 5) {
+async function getValidPaymentFormPage(initialPage, retries = 5) {
   for (let i = 0; i < retries; i++) {
+    const paymentFormPagePromise = initialPage.waitForEvent('popup');
+    await initialPage
+      .getByRole('link', { name: 'Realice el pago de su' })
+      .click();
+    const paymentFormPage = await paymentFormPagePromise;
     const isPageValid =
-      (await page.getByText('Realice el pago de su pasaporte').count()) === 1;
+      (await paymentFormPage
+        .getByText('Realice el pago de su pasaporte')
+        .count()) === 1;
 
-    if (isPageValid) return page;
+    if (isPageValid) return initialPage;
 
     console.log();
-    console.log('Could not get into the payment form page, reloading...');
+    console.log('Could not get into the payment form page, retrying...');
     console.log();
-    await page.reload();
+    await paymentFormPage.close();
   }
 
   throw new Error('Could not get into the payment form page');
