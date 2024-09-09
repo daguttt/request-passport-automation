@@ -138,7 +138,7 @@ async function fillFirstPaymentForm(page) {
   console.log('-*********************************************************-');
   console.log();
 
-  await handOverControlToUser(pageToRequestPassport);
+  await handOverControlToUser(page);
   // -*******************************************************************************-
 }
 
