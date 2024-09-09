@@ -154,12 +154,17 @@ async function extractHtmlPageAndTakeScreenshot(page) {
     // .locator('.modContent')
     .innerHTML();
 
-  console.log({ paymentPageBodyHtml: paymentPageBodyHtml });
+  const currentLocaleDateString = new Date()
+    .toLocaleDateString()
+    .replaceAll('/', '-');
 
-  await writeFile('./output/payment-page.html', paymentPageBodyHtml);
+  await writeFile(
+    `./output/payment-page_${currentLocaleDateString}.html`,
+    paymentPageBodyHtml
+  );
 
   await page.screenshot({
-    path: './output/full-screenshot.png',
+    path: `./output/full-screenshot_${currentLocaleDateString}.png`,
     fullPage: true,
   });
 }
