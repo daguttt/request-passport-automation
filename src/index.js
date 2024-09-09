@@ -81,7 +81,7 @@ async function getValidPaymentFormPage(initialPage, retries = 5) {
     });
 
     const isPageValid =
-      (await paymentFormPage.getByText(TEXT_TO_DETECT_PAGE).count()) === 1;
+      (await paymentFormPage.getByText(TEXT_TO_DETECT_PAGE).count()) >= 1;
 
     if (isPageValid) return paymentFormPage;
 
