@@ -69,7 +69,7 @@ console.log({
  * @param {import('playwright').Page} initialPage
  * @param {number} retries
  */
-async function getValidPaymentFormPage(initialPage, retries = 5) {
+async function getValidPaymentFormPage(initialPage, retries = 10) {
   for (let i = 0; i < retries; i++) {
     const paymentFormPagePromise = initialPage.waitForEvent('popup');
     await initialPage
