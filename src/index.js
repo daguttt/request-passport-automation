@@ -36,6 +36,11 @@ console.log({
   });
   const context = await browser.newContext();
   const initialPage = await context.newPage();
+
+  // Mock
+  // await initialPage.goto('http://localhost:3400/mock');
+  // await fillFirstPaymentForm(initialPage);
+
   await initialPage.goto(
     'https://sedeelectronica.antioquia.gov.co/publicaciones/227/pasaportes/'
   );
