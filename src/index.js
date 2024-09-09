@@ -164,7 +164,8 @@ async function extractHtmlPageAndTakeScreenshot(page) {
   // Example: '2024-09-09_04:56:04_134Z'
   const currentLocaleDateString = new Date()
     .toISOString()
-    .replace(/[T\.]/g, '_');
+    .replace(/[T\.]/g, '_')
+    .replaceAll(':', '-');
 
   await writeFile(
     `./output/payment-page_${currentLocaleDateString}.html`,
