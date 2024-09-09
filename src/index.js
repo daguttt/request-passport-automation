@@ -76,7 +76,7 @@ async function getValidPaymentFormPage(initialPage, retries = 5) {
         .getByText('Realice el pago de su pasaporte')
         .count()) === 1;
 
-    if (isPageValid) return initialPage;
+    if (isPageValid) return paymentFormPage;
 
     console.log();
     console.log('Could not get into the payment form page, retrying...');
