@@ -101,7 +101,7 @@ async function getValidPaymentFormPage(initialPage, retries = 5) {
 async function fillFirstPaymentForm(page) {
   // -*******************************************************************************-
   console.log("Filling 'Tipo de identificación: *'");
-  await page.getByLabel('Tipo de identificación: *').selectOption('1');
+  await page.getByLabel('Tipo de identificación: *').selectOption('CC');
 
   console.log("Filling 'Número de identificación: *'");
   await page
