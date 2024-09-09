@@ -15,7 +15,7 @@ const { DNI, NAMES, LASTNAMES, EMAIL, PHONE } = (() => {
       NAMES: process.env.NAMES,
       LASTNAMES: process.env.LASTNAMES,
       EMAIL: process.env.EMAIL,
-      PHONE: process.env.PHONE,
+      PHONE: process.env.PHONE.replace(' ', ''),
     };
 
   throw new Error('Missing environment variables.');
