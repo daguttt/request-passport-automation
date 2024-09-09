@@ -71,10 +71,17 @@ async function getValidPaymentFormPage(initialPage, retries = 5) {
       .getByRole('link', { name: 'Realice el pago de su' })
       .click();
     const paymentFormPage = await paymentFormPagePromise;
+
+    await paymentFormPage.waitForLoadState('domcontentloaded');
+
+    const TEXT_TO_DETECT_PAGE = 'Realice el pago de su pasaporte';
+
+    console.log({
+      count: await paymentFormPage.getByText(TEXT_TO_DETECT_PAGE).count(),
+    });
+
     const isPageValid =
-      (await paymentFormPage
-        .getByText('Realice el pago de su pasaporte')
-        .count()) === 1;
+      (await paymentFormPage.getByText(TEXT_TO_DETECT_PAGE).count()) === 1;
 
     if (isPageValid) return paymentFormPage;
 
