@@ -104,10 +104,14 @@ async function fillFirstPaymentForm(page) {
   await page.getByLabel('Tipo de identificación: *').selectOption('1');
 
   console.log("Filling 'Número de identificación: *'");
-  await page.getByLabel('Número de identificación: *').fill(DNI);
+  await page
+    .getByLabel('Número de identificación: *', { exact: true })
+    .fill(DNI);
 
   console.log("Filling 'Confirmación Número de identificación: *'");
-  await page.getByLabel('Confirmación Número de identificación: *').fill(DNI);
+  await page
+    .getByLabel('Confirmación Número de identificación: *', { exact: true })
+    .fill(DNI);
 
   console.log("Filling 'Nombres: *'");
   await page.getByLabel('Nombres: *').fill(NAMES);
@@ -116,10 +120,10 @@ async function fillFirstPaymentForm(page) {
   await page.getByLabel('Apellido: *').fill(LASTNAMES);
 
   console.log("Filling 'Email: *'");
-  await page.getByLabel('Email: *').fill(EMAIL);
+  await page.getByLabel('Email: *', { exact: true }).fill(EMAIL);
 
   console.log("Filling 'Confirmación Email: *'");
-  await page.getByLabel('Confirmación Email: *').fill(EMAIL);
+  await page.getByLabel('Confirmación Email: *', { exact: true }).fill(EMAIL);
 
   console.log("Filling 'Celular: *'");
   await page.getByLabel('Celular: *').fill(PHONE);
