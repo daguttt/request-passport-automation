@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "start": "node ./src/index.js",
-    "codegen": "playwright codegen https://sedeelectronica.antioquia.gov.co/publicaciones/227/pasaportes/"
+    "codegen": "playwright codegen https://sedeelectronica.antioquia.gov.co/publicaciones/227/pasaportes/",
+    "codegen-mock": "playwright codegen http://localhost:3400/mock"
   },
   "keywords": [
     "passport",
