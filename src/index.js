@@ -162,7 +162,12 @@ async function handOverControlToUser(page) {
  * @param {import('playwright').Page} page
  */
 async function extractHtmlPageAndTakeScreenshot(page) {
+  console.log('Extracting html page and taking screenshot...');
+  console.log();
+
+  console.log('Waiting for domcontentloaded event...');
   await page.waitForLoadState('domcontentloaded');
+
   const paymentPageBodyHtml = await page
     .locator('body')
     // .locator('.modContent')
