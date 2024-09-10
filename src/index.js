@@ -170,11 +170,12 @@ async function extractHtmlPageAndTakeScreenshot(page) {
     // .locator('.modContent')
     .innerHTML();
 
-  // Example: '2024-09-09_04:56:04_134Z'
+  // Example: '10-9-2024__8-31-15_am'
   const currentLocaleDateString = new Date()
-    .toISOString()
-    .replace(/[T\.]/g, '_')
-    .replaceAll(':', '-');
+    .toLocaleString()
+    .replaceAll('.', '')
+    .replace(/[\/:]/g, '-')
+    .replace(/[,\s]/g, '_');
 
   await writeFile(
     `./output/payment-page_${currentLocaleDateString}.html`,
