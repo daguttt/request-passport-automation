@@ -136,14 +136,12 @@ async function fillFirstPaymentForm(page) {
   console.log("Filling 'Acepto'");
   await page.getByLabel('Acepto').check();
 
-  console.log("Focusing 'Tipo de pasaporte: *'");
-  await page.getByLabel('Tipo de pasaporte: *').focus();
+  console.log("Filling 'Tipo de pasaporte: *'");
+  await page.getByLabel('Tipo de pasaporte: *').selectOption('1');
 
   console.log();
   console.log('-*********************************************************-');
-  console.log(
-    'NOW, SELECT THE TYPE OF PASSPORT AND CONTINUE WITH THE PAYMENT...'
-  );
+  console.log('NOW, CHECK RECAPTCHA AND CONTINUE WITH THE PAYMENT...');
   console.log('-*********************************************************-');
   console.log();
 
