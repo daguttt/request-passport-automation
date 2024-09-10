@@ -104,7 +104,6 @@ async function getValidPaymentFormPage(initialPage, retries = 10) {
  * @param {import('playwright').Page} page
  */
 async function fillFirstPaymentForm(page) {
-  // -*******************************************************************************-
   console.log("Filling 'Tipo de identificación: *'");
   await page.getByLabel('Tipo de identificación: *').selectOption('CC');
 
@@ -139,6 +138,7 @@ async function fillFirstPaymentForm(page) {
   console.log("Filling 'Tipo de pasaporte: *'");
   await page.getByLabel('Tipo de pasaporte: *').selectOption('1');
 
+  // await page.frameLocator('iframe[name="a-34nu29qagghr"]').getByLabel('I\'m not a robot').click();
   console.log();
   console.log('-*********************************************************-');
   console.log('NOW, CHECK RECAPTCHA AND CONTINUE WITH THE PAYMENT...');
@@ -146,7 +146,6 @@ async function fillFirstPaymentForm(page) {
   console.log();
 
   await handOverControlToUser(page);
-  // -*******************************************************************************-
 }
 
 /**
