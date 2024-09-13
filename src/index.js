@@ -81,10 +81,6 @@ async function getValidPaymentFormPage(initialPage, retries = 10) {
 
     const TEXT_TO_DETECT_PAGE = 'Realice el pago de su pasaporte';
 
-    console.log({
-      count: await paymentFormPage.getByText(TEXT_TO_DETECT_PAGE).count(),
-    });
-
     const isPageValid =
       (await paymentFormPage.getByText(TEXT_TO_DETECT_PAGE).count()) >= 1;
 
@@ -96,7 +92,9 @@ async function getValidPaymentFormPage(initialPage, retries = 10) {
     await paymentFormPage.close();
   }
 
-  throw new Error('Could not get into the payment form page');
+  throw new Error(
+    `After ${retries} retries. Could not get into the payment form page`
+  );
 }
 
 /**
